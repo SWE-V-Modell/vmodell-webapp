@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+
+@import "./palette.scss";
+@import "./theme.scss";
+
+$typography: mat-typography-config(
+  $font-family: '"Open Sans", Roboto, sans-serif',
+  $body-2: mat-typography-level(14px, 24px, 600)
+);
+
+@include mat-core($typography);
+/*
+    Available Colors:
+    $atos-blue
+    $atos-orange
+    $atos-yellow
+    $atos-purple
+    $atos-lightpurple
+    $atos-turquoise
+    $atos-green
+    $atos-pink
+    $atos-gray
+    $atos-lightblue
+    $atos-darkblue
+    $materialred
+    $materialgreen
+    $mat-elegant
+*/
+$primary: mat-palette($atos-blue);
+$secondary: mat-palette($mat-elegant);
+$warn: mat-palette($materialred);
+
+$light-theme: mat-light-theme($primary, $secondary, $warn);
+
+@include angular-material-theme($light-theme);
+@include app-theme($light-theme);

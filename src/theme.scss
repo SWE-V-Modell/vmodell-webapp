@@ -1,0 +1,45 @@
+@import "~@angular/material/theming";
+@mixin app-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  .background-primary {
+    background-color: mat-color($primary) !important;
+  }
+  .background-accent {
+    background-color: mat-color($accent) !important;
+  }
+  .background-warn {
+    background-color: mat-color($warn) !important;
+  }
+  .color-primary {
+    color: mat-color($primary);
+  }
+  .color-accent {
+    color: mat-color($accent);
+  }
+  .color-warn {
+    color: mat-color($warn);
+  }
+  .color-white {
+    color: #fff;
+  }
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.centered {
+  margin: auto;
+  text-align: center;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
