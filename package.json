@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@swimlane/ngx-charts": "^10.0.0",
     "@types/chart.js": "^2.7.40",
     "angular-bootstrap-md": "^7.0.0",
     "angular5-csv": "^0.2.10",
