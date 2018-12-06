@@ -1,14 +1,17 @@
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" opened class="sidenav stylish-color container"
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened class="sidenav stylish-color"
     [fixedInViewport]="true" [fixedTopGap]="0" [fixedBottomGap]="0">
-    <div class="row mt-2 mb-2">
-      <h1 class="col-md-8 mx-auto white-text">Webapp</h1>
-    </div>
-    <div class="row">
-      <button mdbBtn type="button" color="{{route.color}}" outline="true"
-        mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2 m-2">
-        <a [routerLink]="[route.route]" class="white-text">{{route.text}}</a>
-      </button>
+    <div class="container">
+      <div class="row mt-2 mb-2">
+        <h1 class="col-md-8 mx-auto white-text" [routerLink]="['']">Webapp</h1>
+      </div>
+      <div class="row" *ngIf="loginService.getLogin()">
+        <button mdbBtn type="button" color="{{route.color}}" outline="true"
+          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2"
+          (click)="route.action()">
+          <a [routerLink]="[route.route]" class="white-text">{{route.text}}</a>
+        </button>
+      </div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="content">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../shared';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class SidenavComponent implements OnInit {
 
   routes = [
-    { text: 'Dashboard', route: '', color: 'primary' },
-    { text: 'Dashboard', route: '', color: 'warning' },
+    { text: 'Dashboard', route: '', color: 'primary', action: () => { } },
+    { text: 'Logout', route: '/login/', color: 'danger', action: () => { console.log(this.loginService.getLogin()); this.loginService.logout() } },
   ]
-  constructor() { }
+  constructor(public loginService: LoginService) { }
 
   ngOnInit() {
   }
