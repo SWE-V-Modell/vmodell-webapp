@@ -1,0 +1,10 @@
+<div class="row">
+  <h1 class="col-md-8 mx-auto"> Statistics </h1>
+  <div class="col-md-6" style="display: block">
+    <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets"
+      [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"
+      [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+
+</div>
