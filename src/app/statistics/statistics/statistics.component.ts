@@ -8,14 +8,25 @@ import { StatService } from '../stat.service';
 })
 export class StatisticsComponent implements OnInit {
   userNumbers: LineChartData[];
+  mapData: any;
 
-  constructor(private StatsService: StatService) { }
+  constructor(private statsService: StatService) { }
 
   ngOnInit() {
     this.generateData();
+    this.generateMapData();
   }
 
   generateData() {
-    this.userNumbers = this.StatsService.generateUserNumbers();
+    this.userNumbers = this.statsService.generateUserNumbers();
+  }
+
+  generateMapData() {
+    this.mapData = this.statsService.generateMap(45);
+  }
+
+  refresh() {
+    this.generateData();
+    this.generateMapData();
   }
 }

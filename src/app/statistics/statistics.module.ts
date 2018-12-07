@@ -8,6 +8,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { MaterialModule } from '../shared/material.module';
 import { LineChartComponent } from './line-chart/line-chart.component';
+import { MapComponent } from './map/map.component';
 
 const routes: Routes = [
   { path: '', component: StatisticsComponent }
@@ -17,6 +18,7 @@ const routes: Routes = [
   declarations: [
     StatisticsComponent,
     LineChartComponent,
+    MapComponent,
   ],
   imports: [
     CommonModule,
