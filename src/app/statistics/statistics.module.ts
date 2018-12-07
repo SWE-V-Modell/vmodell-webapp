@@ -1,21 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { MaterialModule } from '../shared/material.module';
 import { RouterModule, Routes } from '@angular/router';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
+import { StatisticsComponent } from './statistics/statistics.component';
+import { MaterialModule } from '../shared/material.module';
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { MapComponent } from './map/map.component';
+
 const routes: Routes = [
   { path: '', component: StatisticsComponent }
 ]
-// https://github.com/swimlane/ngx-charts/blob/master/demo/combo-chart/combo-series-vertical.component.ts
+
 @NgModule({
-  declarations: [StatisticsComponent],
+  declarations: [
+    StatisticsComponent,
+    LineChartComponent,
+    MapComponent,
+  ],
   imports: [
     CommonModule,
     MDBBootstrapModule,
     MaterialModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgxChartsModule
   ]
 })
 export class StatisticsModule { }
