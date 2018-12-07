@@ -9,14 +9,16 @@ import { LoginService } from '../../shared';
 export class SidenavComponent implements OnInit {
 
   routes = [
-    { text: 'Startseite', route: '', color: 'primary', action: () => { } },
-    { text: 'Kurse', route: '/kurs', color: 'primary', action: () => { } },
-    { text: 'Statistiken', route: '/statistics/', color: 'primary', action: () => { } },
-    { text: 'Ausloggen', route: '/login/', color: 'danger', action: () => { console.log(this.loginService.getLogin()); this.loginService.logout() } },
+    { text: 'Startseite', route: '', color: 'primary' },
+    { text: 'Kurse', route: '/kurs', color: 'primary' },
+    { text: 'Statistiken', route: '/statistics/', color: 'primary' },
   ]
   constructor(public loginService: LoginService) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    console.log(this.loginService.getLogin()); this.loginService.logout()
+  }
 }

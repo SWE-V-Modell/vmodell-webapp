@@ -1,15 +1,22 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened class="sidenav stylish-color"
     [fixedInViewport]="true" [fixedTopGap]="0" [fixedBottomGap]="0">
-    <div class="container">
+    <div class="container navbuttons">
       <div class="row mt-2 mb-2">
         <h1 class="col-md-8 mx-auto white-text" [routerLink]="['']">Webapp</h1>
       </div>
-      <div class="row" *ngIf="loginService.getLogin()">
+      <div class="row " *ngIf="loginService.getLogin()">
         <button mdbBtn type="button" color="{{route.color}}" outline="true"
-          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2"
-          (click)="route.action()">
+          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2">
           <a [routerLink]="[route.route]" class="white-text">{{route.text}}</a>
+        </button>
+
+      </div>
+      <div class="row logout" *ngIf="loginService.getLogin()">
+        <button mdbBtn type="button" color="danger" outline="true"
+          mdbWavesEffect class="col-md-8  mx-auto p-1 pt-2 pb-2" (click)="logout()"
+          [routerLink]="['/login']">
+          <a class="white-text">Ausloggen</a>
         </button>
       </div>
     </div>
