@@ -24,7 +24,7 @@ const MY_DATE_FORMATS = {
 
 export class GermanDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
-    if (displayFormat != "input")
+    if (displayFormat != 'input')
       return date.toDateString();
 
     let day = date.getDate();

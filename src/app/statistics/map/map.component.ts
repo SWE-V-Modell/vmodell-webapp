@@ -1,43 +1,34 @@
 import { Component, OnInit, AfterContentInit, Input, OnChanges } from '@angular/core';
-declare var Datamap: any;
-declare var d3: any;
+declare let Datamap: any;
+declare let d3: any;
 
 @Component({
-  selector: 'stat-map',
+  selector: 'app-stat-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() datas: any
+  @Input() datas: any;
   constructor() { }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    document.getElementById('mapxx').innerHTML = ''
-    var map = new Datamap({
-
+    document.getElementById('mapxx').innerHTML = '';
+    const map = new Datamap({
       element: document.getElementById('mapxx'),
       projection: 'mercator',
       responsive: true,
       fills: {
         defaultFill: '#dddddd',
-        heat1: "#FFEB3B",
-        heat2: "#FFC107",
-        heat3: "#FF9800",
-        heat4: "#FF5722",
-        heat5: "#E91E63",
-        heat6: "#f44336"
+        heat1: '#FFEB3B',
+        heat2: '#FFC107',
+        heat3: '#FF9800',
+        heat4: '#FF5722',
+        heat5: '#E91E63',
+        heat6: '#f44336'
       }, data: this.datas.data
-      // {
-      //   USA: { fillKey: "authorHasTraveledTo" },
-      //   JPN: { fillKey: "authorHasTraveledTo" },
-      //   ITA: { fillKey: "authorHasTraveledTo" },
-      //   CRI: { fillKey: "authorHasTraveledTo" },
-      //   KOR: { fillKey: "authorHasTraveledTo" },
-      //   DEU: { fillKey: "authorHasTraveledTo" },
-      // }
     });
     window.addEventListener('resize', function () {
       map.resize();
@@ -52,6 +43,6 @@ export class MapComponent implements OnInit, OnChanges {
 
     map.resize();
 
-    var colors = d3.scale.category10();
+    const colors = d3.scale.category10();
   }
 }
