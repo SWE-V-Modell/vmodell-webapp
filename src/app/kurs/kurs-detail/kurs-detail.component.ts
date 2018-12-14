@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FieldConfig } from 'src/models/dynamicForms/field-config';
 import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-form.component';
@@ -9,7 +9,7 @@ import { Validators } from '@angular/forms';
   templateUrl: './kurs-detail.component.html',
   styleUrls: ['./kurs-detail.component.scss']
 })
-export class KursDetailComponent implements OnInit {
+export class KursDetailComponent implements OnInit, AfterViewInit {
   id: number;
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -39,7 +39,7 @@ export class KursDetailComponent implements OnInit {
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
-    console.log(this.id)
+    console.log(this.id);
   }
 
   ngAfterViewInit() {
