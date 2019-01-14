@@ -16,7 +16,7 @@ export class KursDetailComponent implements OnInit, AfterViewInit {
   config: FieldConfig[] = [
     {
       type: 'input',
-      label: 'Full name',
+      label: 'Full Name',
       name: 'name',
       placeholder: 'Enter your name',
       validation: [Validators.required, Validators.minLength(4)]
@@ -39,7 +39,6 @@ export class KursDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
-    console.log(this.id);
   }
 
   ngAfterViewInit() {
@@ -52,7 +51,7 @@ export class KursDetailComponent implements OnInit, AfterViewInit {
     });
 
     this.form.setDisabled('submit', true);
-    this.form.setValue('name', 'Todd Motto');
+    // this.form.setValue('name', 'Todd Motto');
   }
 
   submit(value: { [name: string]: any }) {
