@@ -1,0 +1,25 @@
+<form class="text-center border border-light p-5">
+
+  <p class="h4 mb-4">Einloggen</p>
+
+  <input type="email" class="form-control mb-4" placeholder="E-mail">
+  <input type="password" class="form-control mb-4" placeholder="Password">
+
+  <div class="d-flex justify-content-around">
+    <div>
+      <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
+    </div>
+    <div>
+      <a [routerLink]="['/404']">Fasswort vergessen?</a>
+    </div>
+  </div>
+
+  <button mdbBtn color="info" block="true" class="my-4" (click)="login()">
+    Einloggen
+  </button>
+
+  <p>Noch nicht registriert?
+    <a [routerLink]="['/login/register']">Registrieren</a>
+  </p>
+
+</form>

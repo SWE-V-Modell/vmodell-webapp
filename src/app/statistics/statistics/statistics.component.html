@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h1 class="ml-2"> Nutzerstatistiken </h1>
+  </div>
+  <div class="col-md-4 mx-auto">
+    <button mdbBtn type="button" color="elegant" mdbWavesEffect class="centered"
+      (click)="refresh()">
+      <i class="fa fa-sync"></i>
+      Refresh
+    </button>
+  </div>
+</div>
+<div id="wrapper">
+  <mat-tab-group fxFill id="tab-group" mat-stretch-tabs dynamicHeight color="primary"
+    backgroundColor="secondary">
+    <mat-tab label="Start" class="h-75">
+      <ng-template fxFlex matTabContent class="mat-elevation-z4 container ml-1 mr-1">
+        <div class="row pt-3 pb-3">
+          <stat-line-chart class="col-md-10" [data]="userNumbers" [xAxis]="'Datum'"
+            [yAxis]="'Nutzer'"></stat-line-chart>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Karte">
+      <ng-template fxFlex matTabContent class="mat-elevation-z4 container ml-1 mr-1">
+        <div class="row pt-3 pb-3">
+          <stat-map [datas]="mapData" class="col-md-11"></stat-map>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Einzeln">
+      <ng-template fxFlex matTabContent class="mat-elevation-z4 container ml-1 mr-1">
+        <div class="row pt-3 pb-3" *ngFor="let data of userNumbers">
+          <stat-line-chart class="col-md-10" [data]="[data]" [xAxis]="'Datum'"
+            [yAxis]="'Nutzer'" [color]="data.color"></stat-line-chart>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

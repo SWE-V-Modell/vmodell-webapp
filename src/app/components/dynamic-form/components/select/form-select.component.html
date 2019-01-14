@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8 mx-auto" [formGroup]="group">
+    <h4 class="mb-0">{{config.label}}</h4>
+    <mat-form-field class="mt-1">
+      <mat-select [formControlName]="config.name" placeholder="{{config.placeholder}}">
+        <mat-option *ngFor="let option of config.options" [value]="option">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
