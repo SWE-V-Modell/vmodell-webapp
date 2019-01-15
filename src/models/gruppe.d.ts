@@ -1,0 +1,3 @@
+interface Gruppe {
+  Id: number,
+}
