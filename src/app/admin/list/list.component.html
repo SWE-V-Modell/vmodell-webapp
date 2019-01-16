@@ -1,0 +1,23 @@
+<div class="list-container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="input-group" id="adv-search">
+        <input type="text" class="form-control" placeholder="Suche" [(ngModel)]="searchStr" (keyup)="search()" />
+        <div class="input-group-btn">
+          <div class="btn-group" role="group">
+            <button type="button" mdbBtn color="mdb-color" class="button"><span class="fa fa-search" aria-hidden="true"></span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="list-group">
+    <a *ngFor="let item of searchedSet; let i = index" 
+    class="list-group-item list-group-item-action" 
+    [ngClass]="{'active mdb-color': i===selectedIndex}"
+    (click)="selectedIndex = i">
+      {{item}}
+    </a>
+    
+  </div>
+</div>
