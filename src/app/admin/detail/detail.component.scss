@@ -1,0 +1,24 @@
+.div-row {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+
+.div-column {
+    width: 12.5%;
+    flex-grow: 1;
+    margin: auto;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.controls{
+    float: right;
+}
+
+form{
+    margin-top:5%;
+}
