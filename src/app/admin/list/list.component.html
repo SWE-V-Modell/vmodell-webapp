@@ -15,8 +15,8 @@
     <a *ngFor="let item of searchedSet; let i = index" 
     class="list-group-item list-group-item-action" 
     [ngClass]="{'active mdb-color': i===selectedIndex}"
-    (click)="selectedIndex = i">
-      {{item}}
+    (click)="chooseItem(i, item)">
+      {{item.farbe}}
     </a>
     
   </div>

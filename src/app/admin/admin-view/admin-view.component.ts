@@ -9,11 +9,17 @@ export class AdminViewComponent implements OnInit {
 
   tabs = ["Benutzer", "Kurs", "Dozent"];
   selectedTab: number = 0;
+  selectedItem: any;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.tabs)
+    this.selectedItem = null;
+  }
+
+  setSelectedItem(item: any){
+    this.selectedItem = item;
+    console.log(this.selectedItem);
   }
 
 }
