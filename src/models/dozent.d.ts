@@ -1,6 +1,6 @@
 interface Dozent {
   Id: number,
   Name: string,
-  Email: string,
+  EMail: string,
   Passwort: string,
 }

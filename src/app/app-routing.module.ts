@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginModule' },
   { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsModule' },
   { path: 'veranstaltung', loadChildren: './veranstaltung/veranstaltung.module#VeranstaltungModule', canActivate: [LoginGuard] },
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [LoginGuard] },
 ];
 
 @NgModule({

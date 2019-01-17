@@ -1,0 +1,12 @@
+<list [type]="selectedTab" (selectedItem)="setSelectedItem($event)"></list>
+<mat-tab-group (selectedIndexChange)="selectedTab = $event; ngOnInit();">
+  <mat-tab *ngFor="let tab of tabs" label="{{tab}}">
+    <div class="content">
+      <detail *ngIf="selectedItem" [type]="selectedTab" [data]="selectedItem" (close)="selectedItem=null"></detail>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<div class="controls">
+  <button mdbBtn color="mdb-color" mdbWavesEffect (click)="selectedItem=-1;">
+    <span class="fa fa-plus" aria-hidden="true"></span> Neu
+  </button></div>
