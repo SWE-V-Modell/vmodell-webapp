@@ -5,7 +5,7 @@ import {
   MatButtonModule, MatCheckboxModule, MatCardModule, MatIconModule,
   MatFormFieldModule, MatListModule, MatRadioModule, MatSelectModule,
   MatSidenavModule, MatSlideToggleModule, MatSortModule, MatToolbarModule,
-  MatTableModule, MatPaginatorModule, MatStepperModule, MatInputModule,
+  MatTableModule, MatPaginatorModule, MatInputModule,
   MatAutocompleteModule, MatButtonToggleModule, MatDatepickerModule,
   MatDialogModule, MatDividerModule, MatExpansionModule, MatGridListModule,
   MatMenuModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule,
@@ -24,7 +24,7 @@ const MY_DATE_FORMATS = {
 
 export class GermanDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
-    if (displayFormat != "input")
+    if (displayFormat != 'input')
       return date.toDateString();
 
     let day = date.getDate();
@@ -45,7 +45,7 @@ export class GermanDateAdapter extends NativeDateAdapter {
     MatButtonModule, MatCheckboxModule, MatCardModule, MatIconModule,
     MatFormFieldModule, MatListModule, MatRadioModule, MatSelectModule,
     MatSidenavModule, MatSlideToggleModule, MatSortModule, MatToolbarModule,
-    MatTableModule, MatPaginatorModule, MatStepperModule, MatInputModule,
+    MatTableModule, MatPaginatorModule, MatInputModule,
     MatAutocompleteModule, MatButtonToggleModule, MatDatepickerModule,
     MatDialogModule, MatDividerModule, MatExpansionModule, MatGridListModule,
     MatMenuModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule,
@@ -55,7 +55,7 @@ export class GermanDateAdapter extends NativeDateAdapter {
     MatButtonModule, MatCheckboxModule, MatCardModule, MatIconModule,
     MatFormFieldModule, MatListModule, MatRadioModule, MatSelectModule,
     MatSidenavModule, MatSlideToggleModule, MatSortModule, MatToolbarModule,
-    MatTableModule, MatPaginatorModule, MatStepperModule, MatInputModule,
+    MatTableModule, MatPaginatorModule, MatInputModule,
     MatAutocompleteModule, MatButtonToggleModule, MatDatepickerModule,
     MatDialogModule, MatDividerModule, MatExpansionModule, MatGridListModule,
     MatMenuModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule,

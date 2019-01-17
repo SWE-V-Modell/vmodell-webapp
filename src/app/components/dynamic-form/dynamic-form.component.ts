@@ -5,7 +5,7 @@ import { FieldConfig } from 'src/models/dynamicForms/field-config';
 
 @Component({
   exportAs: 'dynamicForm',
-  selector: 'dynamic-form',
+  selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnChanges, OnInit {

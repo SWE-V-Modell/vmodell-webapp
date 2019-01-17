@@ -1,6 +1,12 @@
 # VmodellWebapp
 
 ## Contribution
+
+### Linting
+
+We are using TypeScript Linter. :)
+Use it too.
+
 ### Branching Policy
 We are using a shrunk form of the common [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/#the-main-branches).
 
