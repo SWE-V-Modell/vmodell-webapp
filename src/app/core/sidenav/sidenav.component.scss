@@ -1,8 +1,9 @@
+
 .sidenav {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
+  min-width: 200px;
 }
 
 .content {
@@ -11,7 +12,12 @@
 }
 
 .logout {
-  margin-top: 65vh;
+  margin-top: 1vh;
+  bottom: 0;
+}
+
+.postillion{
+  margin: 1vh;
 }
 
 .navbuttons {
