@@ -51,8 +51,15 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
   }
   ngOnChanges() { this.ngOnInit() }
   search() {
-    //Kurse auch suchbar machen
-    this.searchedSet = this.dataArray.filter(t => t.Name.includes(this.searchStr));
+    try {
+      this.searchedSet = this.dataArray.filter(t => t.Name.includes(this.searchStr));
+
+    } catch (e) {
+      try {
+        this.searchedSet = this.dataArray.filter(t => t.Beschreibung.includes(this.searchStr));
+      } catch (e) { }
+    }
+
   }
   chooseItem(index: number, item: any) {
     this.selectedIndex = index;
@@ -65,9 +72,9 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
       this.subscription2.unsubscribe();
   }
   getVeranstaltungName(veranstaltung: Veranstaltung) {
-    if (veranstaltung.Modul) {
+    if (veranstaltung.Modul != null) {
       let modul = this.moduls.find(m => m.Id == veranstaltung.Modul);
-      return {Beschreibung: modul.Beschreibung + ', ', Datum: veranstaltung.Datum };
+      return { Beschreibung: modul.Beschreibung + ', ', Datum: veranstaltung.Datum };
     }
   }
 }

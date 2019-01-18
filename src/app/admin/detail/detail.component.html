@@ -55,10 +55,10 @@
   <button *ngIf="disabled" mdbBtn color="mdb-color" mdbWavesEffect (click)="disableForm(false); disabled = false;">
     <span class="fa fa-pencil" aria-hidden="true"></span> Bearbeiten
   </button>
-  <button *ngIf="!disabled && !createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" mdbWavesEffect>
+  <button *ngIf="!disabled && !createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" (click)="save()" mdbWavesEffect>
     <span class="fa fa-save" aria-hidden="true"></span> Speichern
   </button>
-  <button *ngIf="createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" mdbWavesEffect>
+  <button *ngIf="createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" (click)="create()" mdbWavesEffect>
     <span class="fa fa-plus" aria-hidden="true"></span> Erstellen
   </button>
   <button *ngIf="disabled" mdbBtn color="mdb-color" mdbWavesEffect>
