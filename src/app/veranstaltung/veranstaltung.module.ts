@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule } from '@angular/router';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -9,11 +8,7 @@ import { ComponentsModule } from '../components/components.module';
 
 import { VeranstaltungComponent } from './veranstaltung/veranstaltung.component';
 import { VeranstaltungDetailComponent } from './veranstaltung-detail/veranstaltung-detail.component';
-
-const routes: Routes = [
-  { path: '', component: VeranstaltungComponent },
-  { path: 'edit/:id', component: VeranstaltungDetailComponent },
-];
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -23,9 +18,9 @@ const routes: Routes = [
     CommonModule,
     MDBBootstrapModule,
     MaterialModule,
-    RouterModule.forChild(routes),
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class VeranstaltungModule { }
