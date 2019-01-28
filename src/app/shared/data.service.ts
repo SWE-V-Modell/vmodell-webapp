@@ -10,6 +10,7 @@ export class DataService {
 
   path = '/api';
 
+  private accountClient: RestClient<Account>;
   private adminClient: RestClient<Admin>;
   private dozentClient: RestClient<Dozent>;
   private gruppeClient: RestClient<Gruppe>;
@@ -20,6 +21,7 @@ export class DataService {
 
   constructor(private http: HttpClient) {
     this.adminClient = new RestClient<Admin>(http, this.path + '');
+    this.accountClient = new RestClient<Account>(http, this.path + '');
     this.dozentClient = new RestClient<Dozent>(http, this.path + '');
     this.gruppeClient = new RestClient<Gruppe>(http, this.path + '');
     this.modulClient = new RestClient<Modul>(http, this.path + '');
@@ -42,6 +44,22 @@ export class DataService {
   }
   deleteAdmin(id: number) {
     this.adminClient.deleteEntity(id);
+  }
+
+  getAllAccounts(): Observable<Account[]> {
+    return this.accountClient.getAll();
+  }
+  getAccount(id: number): Observable<Account> {
+    return this.accountClient.getEntityById(id);
+  }
+  setAccount(Account: Account) {
+    this.accountClient.postEntity(Account.Id, Account);
+  }
+  createAccount(Account: Account) {
+    this.accountClient.putEntity(Account.Id, Account);
+  }
+  deleteAccount(id: number) {
+    this.accountClient.deleteEntity(id);
   }
 
 
