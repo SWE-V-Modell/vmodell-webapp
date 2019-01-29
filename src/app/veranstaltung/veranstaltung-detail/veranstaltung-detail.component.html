@@ -24,17 +24,19 @@
         </mat-form-field>
 
         <div class="col-md-6">
+          von
           <input [ngxTimepicker]="picker" formControlName="von">
           <ngx-material-timepicker #picker></ngx-material-timepicker>
         </div>
 
         <div class="col-md-6">
+          bis
           <input [ngxTimepicker]="picker2" formControlName="bis">
           <ngx-material-timepicker #picker2></ngx-material-timepicker>
         </div>
 
         <mat-form-field class="col-md-12">
-          <textarea matInput placeholder="Anmerkung"></textarea>
+          <textarea matInput formControlName="anmerkung" placeholder="Anmerkung"></textarea>
         </mat-form-field>
       </div>
 

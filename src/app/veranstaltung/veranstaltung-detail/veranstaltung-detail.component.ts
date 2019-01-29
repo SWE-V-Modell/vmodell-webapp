@@ -33,7 +33,7 @@ export class VeranstaltungDetailComponent implements OnInit {
         datum: new FormControl(this.veranstaltung.datum, Validators.required),
         title: new FormControl(this.veranstaltung.titel, Validators.required),
         von: new FormControl(this.dateToTime(this.veranstaltung.von), Validators.required),
-        bis: new FormControl(this.dateToTime(this.veranstaltung.von), Validators.required),
+        bis: new FormControl(this.dateToTime(this.veranstaltung.bis), Validators.required),
         anmerkung: new FormControl(this.veranstaltung.anmerkung)
       })
       this.veranstaltungsForm.valueChanges.subscribe(data => {
@@ -47,6 +47,7 @@ export class VeranstaltungDetailComponent implements OnInit {
   }
 
   save() {
+    console.log(this.veranstaltung);
     this.dataService.veranstaltungClient.update(this.veranstaltung.id, this.veranstaltung);
   }
 
