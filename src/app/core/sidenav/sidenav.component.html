@@ -7,8 +7,9 @@
       </div>
       <div class="row " *ngIf="loginService.getLogin()">
         <button mdbBtn type="button" color="{{route.color}}" outline="true"
-          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2">
-          <a [routerLink]="[route.route]" class="white-text">{{route.text}}</a>
+          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2"
+          [routerLink]="[route.route]">
+          <a class="white-text">{{route.text}}</a>
         </button>
 
       </div>

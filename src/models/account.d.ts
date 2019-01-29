@@ -1,5 +1,5 @@
-interface Account {
-  Id: number,
-  EMail: string,
-  Passwort: string,
+interface MyAccount {
+  id: number,
+  eMail: string,
+  passwort: string,
 }

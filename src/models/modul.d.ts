@@ -1,5 +1,5 @@
 interface Modul {
-  Id: number,
-  Dozent: number,
-  Beschreibung: string,
+  id: number,
+  dozent: number,
+  beschreibung: string,
 }

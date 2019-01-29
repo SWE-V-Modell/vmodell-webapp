@@ -1,6 +1,6 @@
 interface Student {
-  Id: number,
-  Name: string,
-  Gruppe: number,
-  Account: number,
+  id: number,
+  name: string,
+  gruppe: number,
+  account: number,
 }

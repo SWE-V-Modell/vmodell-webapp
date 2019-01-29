@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
@@ -14,6 +16,7 @@ import { LoginModule } from './login/login.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { VeranstaltungModule } from './veranstaltung/veranstaltung.module';
 import { AdminModule } from './admin/admin.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { AdminModule } from './admin/admin.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-
+    HttpClientModule,
+    NgxMaterialTimepickerModule.forRoot(),
     // Style
     MDBBootstrapModule.forRoot(),
 

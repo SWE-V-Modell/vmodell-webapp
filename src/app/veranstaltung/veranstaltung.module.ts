@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MaterialModule } from '../shared/material.module';
 import { ComponentsModule } from '../components/components.module';
 
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
     MaterialModule,
     ComponentsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    NgxMaterialTimepickerModule.forRoot()
   ]
 })
 export class VeranstaltungModule { }

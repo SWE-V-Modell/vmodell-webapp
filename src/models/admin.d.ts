@@ -1,5 +1,5 @@
 interface Admin {
-  Id: number,
-  Name: string,
-  Account: number;
+  id: number,
+  name: string,
+  account: number;
 }
