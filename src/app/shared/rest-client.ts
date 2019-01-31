@@ -20,12 +20,12 @@ export class RestClient<T> {
     return this.http.get<T>(this.path + '?id=' + id.toString());
   }
   create(id: number, entity: T) {
-    this.http.post<T>(this.path + '/' + id, entity, { headers: headers }).subscribe(() => { });
+    this.http.post<T>(this.path + '/', entity, { headers: headers }).subscribe(() => { });
   }
   update(id: number, entity: T) {
     this.http.put<T>(this.path + '/' + id, entity, { headers: headers }).subscribe(() => { });
   }
   delete(id: any) {
-    this.http.delete(this.path + id).subscribe(() => { });
+    this.http.delete(this.path + '/' + id).subscribe(() => { });
   }
 }
