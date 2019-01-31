@@ -6,13 +6,14 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MaterialModule } from '../shared/material.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EventComponent } from './event/event.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent }
 ];
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, EventComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule,

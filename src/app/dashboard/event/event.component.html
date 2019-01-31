@@ -1,1 +1,9 @@
-<!-- Hier könnte ihr Termin stehen -->
+<div class="card">
+    <h2 class="card-header">{{termin.title}}</h2>
+    <div class="card-body">
+        <h2 class="card-title">{{getDate(termin.begin, termin.end)}}</h2>
+        <p class="card-text">{{termin.description}}</p>
+        <a (click)="showDetail()" class="btn btn-primary">Mehr Informationen</a>
+    </div>
+</div>
+<br>

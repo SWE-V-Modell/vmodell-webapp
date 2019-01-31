@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RestClient } from './rest-client';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -117,13 +117,20 @@ export class DataService {
     return this.veranstaltungClient.getAll();
   }
   getVeranstaltung(id: number): Observable<Veranstaltung> {
-    return this.veranstaltungClient.getEntityById(id);
+    let ver : Observable<Veranstaltung>;
+     let verSource = new BehaviorSubject<Veranstaltung>(
+      { id: 1, title: "SWE", modul: 1, begin: new Date(''), end: new Date(''), description: "asd" }
+    );
+    ver = verSource.asObservable();
+
+    return ver;
+    //return this.veranstaltungClient.getEntityById(id);
   }
   setVeranstaltung(Veranstaltung: Veranstaltung) {
-    this.veranstaltungClient.postEntity(Veranstaltung.Id, Veranstaltung);
+    this.veranstaltungClient.postEntity(Veranstaltung.id, Veranstaltung);
   }
   createVeranstaltung(Veranstaltung: Veranstaltung) {
-    this.veranstaltungClient.putEntity(Veranstaltung.Id, Veranstaltung);
+    this.veranstaltungClient.putEntity(Veranstaltung.id, Veranstaltung);
   }
   deleteVeranstaltung(id: number) {
     this.veranstaltungClient.deleteEntity(id);
