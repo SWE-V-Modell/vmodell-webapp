@@ -26,8 +26,8 @@ export class VeranstaltungDetailComponent implements OnInit {
 
     this.dataService.veranstaltungClient.getById(this.id).subscribe(veranstaltung => {
       this.veranstaltung = veranstaltung[0];
-      console.log(veranstaltung)
-      this.veranstaltung.datum = new Date(this.veranstaltung.datum);
+      console.log(veranstaltung);
+      this.veranstaltung.datum = new Date(this.veranstaltung.date_Begin);
       this.veranstaltung.date_Begin = new Date(this.veranstaltung.date_Begin);
       this.veranstaltung.date_End = new Date(this.veranstaltung.date_End);
       console.log(this.veranstaltung);

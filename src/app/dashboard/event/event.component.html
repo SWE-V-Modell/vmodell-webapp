@@ -1,8 +1,8 @@
 <div class="card">
-    <h2 class="card-header">{{termin.title}}</h2>
+    <h2 class="card-header">{{termin.titel}}</h2>
     <div class="card-body">
-        <h2 class="card-title">{{getDate(termin.begin, termin.end)}}</h2>
-        <p class="card-text">{{termin.description}}</p>
+        <h2 class="card-title">{{getDate(termin.date_Begin, termin.date_End)}}</h2>
+        <p class="card-text">{{termin.anmerkung}}</p>
         <a (click)="showDetail()" class="btn btn-primary">Mehr Informationen</a>
     </div>
 </div>

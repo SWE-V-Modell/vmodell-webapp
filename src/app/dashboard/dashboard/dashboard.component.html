@@ -1,14 +1,14 @@
-<div class="card-container">
-  <mat-card>
-    <mat-card-title>Vergangene Veranstaltungen</mat-card-title>
-    <br><event *ngFor="let termin of filter(-1)" [termin]="termin"></event>
-  </mat-card>
-  <mat-card>
-    <mat-card-title>Diese Woche</mat-card-title>
-    <br><event *ngFor="let termin of filter(0)" [termin]="termin"></event>
-  </mat-card>
-  <mat-card>
-    <mat-card-title>Bevorstehende Veranstaltungen</mat-card-title>
-    <br><event *ngFor="let termin of filter(1)" [termin]="termin"></event>
-  </mat-card>
-</div>
+<mat-tab-group (selectedIndexChange)="selectedTab = $event; ngOnInit();">
+  <mat-tab *ngFor="let tab of tabs" label="{{tab}}">
+    <div class="content">
+      <mat-card>
+        <div *ngIf="filter(selectedTab).length > 0; else anmerkung">
+        <br><event *ngFor="let termin of filter(selectedTab)" [termin]="termin"></event>
+        </div>
+        <ng-template #anmerkung>
+          <p class="card-text" style="text-align: center; font-size: 17px;">Keine Veranstaltung</p>
+        </ng-template>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>

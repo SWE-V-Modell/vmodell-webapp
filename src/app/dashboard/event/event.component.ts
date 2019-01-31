@@ -8,20 +8,19 @@ import { Router } from '@angular/router';
 })
 export class EventComponent implements OnInit {
 
-  @Input() termin : Veranstaltung;
+  @Input() termin: Veranstaltung;
   constructor(private router: Router) { }
 
   ngOnInit() {
-    console.log(this.termin);
   }
 
   getDate(begin: Date, end: Date): String {
-    return begin.getDate() + "." + (begin.getUTCMonth()+1) + "." + begin.getUTCFullYear() + " (" + begin.toTimeString().substring(0,5) + " - " + end.toTimeString().substring(0, 5) + ")";
+    return new Date(begin).getDate() + '.' + (new Date(begin).getUTCMonth() + 1) + '.' + new Date(begin).getUTCFullYear() + ' (' + new Date(begin).toTimeString().substring(0, 5) + ' - ' + new Date(end).toTimeString().substring(0, 5) + ')';
   }
 
   showDetail() {
     this.router.navigateByUrl('/veranstaltung/edit/' + this.termin.id);
   }
 
-  //getTime()
+  // getTime()
 }

@@ -10,6 +10,8 @@ import { ComponentsModule } from '../components/components.module';
 import { VeranstaltungComponent } from './veranstaltung/veranstaltung.component';
 import { VeranstaltungDetailComponent } from './veranstaltung-detail/veranstaltung-detail.component';
 import { RouterModule } from '@angular/router';
+import {EventComponent} from '../dashboard/event/event.component';
+import {DashboardModule} from '../dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { RouterModule } from '@angular/router';
     ComponentsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgxMaterialTimepickerModule.forRoot()
+    NgxMaterialTimepickerModule.forRoot(),
+    DashboardModule
   ]
 })
 export class VeranstaltungModule { }

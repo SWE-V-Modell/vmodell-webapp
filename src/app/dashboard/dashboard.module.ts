@@ -15,6 +15,7 @@ import { EventComponent } from './event/event.component';
     MDBBootstrapModule,
     MaterialModule,
     RouterModule,
-  ]
+  ],
+  exports: [EventComponent]
 })
 export class DashboardModule { }
