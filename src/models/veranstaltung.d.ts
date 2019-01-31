@@ -1,8 +1,9 @@
 interface Veranstaltung {
-  id: number;
-  title: String;
-  modul: number;
-  begin: Date;
-  end: Date;
-  description: String;
+  id: number,
+  titel: string,
+  modul: number,
+  datum: Date,
+  von: Date,
+  bis: Date,
+  anmerkung: string,
 }

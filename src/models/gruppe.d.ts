@@ -1,3 +1,4 @@
 interface Gruppe {
-  Id: number,
+  id: number,
+  beschreibung: string,
 }

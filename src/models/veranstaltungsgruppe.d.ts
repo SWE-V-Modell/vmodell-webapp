@@ -1,5 +1,5 @@
 interface Veranstaltungsgruppe {
-  Id: number,
-  Gruppe: number,
-  Veranstaltung: number,
+  id: number,
+  gruppe: number,
+  veranstaltung: number,
 }
