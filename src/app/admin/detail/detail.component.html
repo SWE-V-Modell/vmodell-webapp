@@ -1,12 +1,12 @@
 <form [formGroup]="form">
   <div class="div-row">
-    <div *ngIf="type == 0 || type == 2" class="div-column">
+    <div *ngIf="type != 1 && type != 4" class="div-column">
       <h4 class="mb-0">Name</h4>
       <mat-form-field class="md-form mt-1">
         <input formControlName="name" matInput placeholder="Geben Sie einen Namen ein!">
       </mat-form-field>
     </div>
-    <div *ngIf="type == 2" class="div-column">
+    <div *ngIf="type != 1 && type != 4" class="div-column">
       <h4 class="mb-0">Email</h4>
       <mat-form-field class="md-form mt-1" [formGroup]="form">
         <input formControlName="email" matInput placeholder="Geben Sie eine Email an!">
@@ -14,14 +14,18 @@
     </div>
   </div>
   <div class="div-row">
-    <div *ngIf="type == 1" class="div-column">
-      <h4 class="mb-0">Modul</h4>
-      <mat-form-field class="md-form mt-1">
-        <mat-select formControlName="module" placeholder="Wählen Sie ein Modul">
-          <mat-option *ngFor="let option of modul" [value]="option.Id">
-            {{ option.Beschreibung }}
-          </mat-option>
-        </mat-select>
+    <div *ngIf="type != 1 && type != 4" class="div-column">
+      <h4 class="mb-0">Passwort</h4>
+      <mat-form-field class="md-form mt-1" [formGroup]="form">
+        <input type="password" formControlName="password" matInput placeholder="Geben Sie ein Passwort an!">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="div-row">
+    <div *ngIf="type == 1 || type ==4" class="div-column">
+      <h4 class="mb-0">Bezeichnung</h4>
+      <mat-form-field class="md-form mt-1" [formGroup]="form">
+        <input formControlName="bezeichnung" matInput placeholder="Geben Sie eine Bezeichnung an!">
       </mat-form-field>
     </div>
     <div *ngIf="type == 1" class="div-column">
@@ -47,6 +51,18 @@
       </mat-form-field>
     </div>
   </div>
+  <div class="div-row">
+    <div *ngIf="type == 1" class="div-column">
+      <h4 class="mb-0">Gruppen</h4>
+      <mat-form-field class="md-form mt-1">
+        <mat-select formControlName="gruppen" placeholder="Wählen Sie die Gruppen aus" multiple>
+          <mat-option *ngFor="let option of gruppenOptions" [value]="option.Id">
+            {{ option.Beschreibung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </form>
 <div class="controls">
   <button *ngIf="!disabled" mdbBtn color="mdb-color" mdbWavesEffect (click)="cancel()">
@@ -61,7 +77,7 @@
   <button *ngIf="createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" (click)="create()" mdbWavesEffect>
     <span class="fa fa-plus" aria-hidden="true"></span> Erstellen
   </button>
-  <button *ngIf="disabled" mdbBtn color="mdb-color" mdbWavesEffect>
+  <button *ngIf="disabled" mdbBtn color="mdb-color" (click)="delete()" mdbWavesEffect>
     <span class="fa fa-trash" aria-hidden="true"></span> Löschen
   </button>
 </div>

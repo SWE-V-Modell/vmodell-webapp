@@ -13,7 +13,7 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
   @Output() selectedItem = new EventEmitter<any>();
 
   dataArray: any;
-  moduls: Modul[];
+  gruppes: Gruppe[];
   searchedSet = [];
   selectedIndex: number;
   searchStr: string = "";
@@ -31,8 +31,8 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
         });
         break;
       case 1:
-        this.subscription = this.data.getAllModuls().subscribe(data => {
-          this.moduls = data;
+        this.subscription = this.data.getAllGruppes().subscribe(data => {
+          this.gruppes = data;
           this.subscription2 = this.data.getAllVeranstaltungs().subscribe(data => {
             this.dataArray = data;
             this.searchedSet = data;
@@ -41,6 +41,18 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
         break;
       case 2:
         this.subscription = this.data.getAllDozents().subscribe(data => {
+          this.dataArray = data;
+          this.searchedSet = data;
+        });
+        break;
+      case 3:
+        this.subscription = this.data.getAllAdmins().subscribe(data => {
+          this.dataArray = data;
+          this.searchedSet = data;
+        });
+        break;
+      case 4:
+        this.subscription = this.data.getAllGruppes().subscribe(data => {
           this.dataArray = data;
           this.searchedSet = data;
         });
@@ -70,11 +82,5 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
       this.subscription.unsubscribe();
     if (this.subscription2)
       this.subscription2.unsubscribe();
-  }
-  getVeranstaltungName(veranstaltung: Veranstaltung) {
-    if (veranstaltung.Modul != null) {
-      let modul = this.moduls.find(m => m.Id == veranstaltung.Modul);
-      return { Beschreibung: modul.Beschreibung + ', ', Datum: veranstaltung.Datum };
-    }
   }
 }

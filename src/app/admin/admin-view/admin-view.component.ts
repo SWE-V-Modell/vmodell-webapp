@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminViewComponent implements OnInit {
 
-  tabs = ["Benutzer", "Kurs", "Dozent"];
+  tabs = ["Studenten", "Veranstaltungen", "Dozent", "Admin", "Gruppen"];
   selectedTab: number = 0;
   selectedItem: any;
 

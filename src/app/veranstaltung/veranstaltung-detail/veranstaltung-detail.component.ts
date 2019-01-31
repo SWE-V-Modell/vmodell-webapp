@@ -25,7 +25,7 @@ export class VeranstaltungDetailComponent implements OnInit {
     this.dataService.getVeranstaltung(this.id).subscribe(veranstaltung => {
       this.veranstaltung = veranstaltung;
       this.veranstaltungsForm = new FormGroup({
-        modul: new FormControl(this.veranstaltung.Modul, Validators.required),
+        // modul: new FormControl(this.veranstaltung.Modul, Validators.required),
         datum: new FormControl(this.veranstaltung.Datum, Validators.required),
         von: new FormControl(this.veranstaltung.Von, Validators.required),
         bis: new FormControl(this.veranstaltung.Bis, Validators.required),

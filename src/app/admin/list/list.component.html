@@ -16,7 +16,7 @@
     class="list-group-item list-group-item-action" 
     [ngClass]="{'active mdb-color': i===selectedIndex}"
     (click)="chooseItem(i, item)">
-      {{item.Name}} {{getVeranstaltungName(item)?.Beschreibung}} {{getVeranstaltungName(item)?.Datum | date: "dd.MM.yyyy"}} 
+      {{item.Name}}  {{item?.Datum | date: "dd.MM.yyyy"}} {{item?.Beschreibung}}
     </a>
     
   </div>
