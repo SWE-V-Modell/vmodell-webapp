@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { AdminDataService } from '../admin-data.service';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'list',
@@ -20,39 +20,39 @@ export class ListComponent implements OnInit, OnChanges, OnDestroy {
   subscription: Subscription;
   subscription2: Subscription;
 
-  constructor(private data: AdminDataService) { }
+  constructor(private data: DataService) { }
 
   ngOnInit() {
     switch (this.type) {
       case 0:
-        this.subscription = this.data.getAllStudents().subscribe(data => {
+        this.subscription = this.data.studentClient.getAll().subscribe(data => {
           this.dataArray = data;
           this.searchedSet = data;
         });
         break;
       case 1:
-        this.subscription = this.data.getAllGruppes().subscribe(data => {
+        this.subscription = this.data.gruppeClient.getAll().subscribe(data => {
           this.gruppes = data;
-          this.subscription2 = this.data.getAllVeranstaltungs().subscribe(data => {
+          this.subscription2 = this.data.veranstaltungClient.getAll().subscribe(data => {
             this.dataArray = data;
             this.searchedSet = data;
           });
         });
         break;
       case 2:
-        this.subscription = this.data.getAllDozents().subscribe(data => {
+        this.subscription = this.data.dozentClient.getAll().subscribe(data => {
           this.dataArray = data;
           this.searchedSet = data;
         });
         break;
       case 3:
-        this.subscription = this.data.getAllAdmins().subscribe(data => {
+        this.subscription = this.data.adminClient.getAll().subscribe(data => {
           this.dataArray = data;
           this.searchedSet = data;
         });
         break;
       case 4:
-        this.subscription = this.data.getAllGruppes().subscribe(data => {
+        this.subscription = this.data.gruppeClient.getAll().subscribe(data => {
           this.dataArray = data;
           this.searchedSet = data;
         });

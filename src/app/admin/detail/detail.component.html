@@ -20,6 +20,16 @@
         <input type="password" formControlName="password" matInput placeholder="Geben Sie ein Passwort an!">
       </mat-form-field>
     </div>
+    <div *ngIf="type == 0" class="div-column">
+      <h4 class="mb-0">Gruppe</h4>
+      <mat-form-field class="md-form mt-1">
+        <mat-select formControlName="sgruppe" placeholder="Wählen Sie die Gruppe aus">
+          <mat-option *ngFor="let option of gruppenOptions" [value]="option.Id">
+            {{ option.Beschreibung }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
   <div class="div-row">
     <div *ngIf="type == 1 || type ==4" class="div-column">

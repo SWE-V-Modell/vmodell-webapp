@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { AdminDataService } from '../admin-data.service';
 import { Subscription } from 'rxjs';
+import { DataService } from 'src/app/shared/data.service';
 
 
 @Component({
@@ -19,13 +19,17 @@ export class DetailComponent implements OnChanges, OnDestroy {
   disabled: boolean;
   createmod: boolean;
   gruppenOptions;
-  subscription: Subscription;
+  subscription: Subscription[];
   student: Student = {} as Student;
   dozent: Dozent = {} as Student;
+  admin: Admin = {} as Admin;
   veranstaltung: Veranstaltung = {} as Veranstaltung;
   gruppe: Gruppe = {} as Gruppe;
+  veranstaltungsgruppen: Gruppe[];
+  account: MyAccount = {} as MyAccount;
+  student_gruppe: Gruppe;
 
-  constructor(private dataServ: AdminDataService) { }
+  constructor(private dataService: DataService) { }
 
   get name() { return this.form.get('name'); }
   get gruppen() { return this.form.get('gruppen'); }
@@ -35,20 +39,46 @@ export class DetailComponent implements OnChanges, OnDestroy {
   get email() { return this.form.get('email'); }
   get bezeichnung() { return this.form.get('bezeichnung'); }
   get password() { return this.form.get('password'); }
+  get sgruppe() { return this.form.get('sgruppe'); }
 
   ngOnChanges() {
     this.initializeEmptyForm();
-    this.subscription = this.dataServ.getAllGruppes().subscribe(data => this.gruppenOptions = data);
+    this.subscription.push(this.dataService.gruppeClient.getAll().subscribe(data => this.gruppenOptions = data));
     if (this.data != -1) {
-      this.disableForm(true);
-      this.patchValue();
-      this.disabled = true;
-      this.createmod = false;
+      if (this.type != 1 && this.type != 4)
+        this.subscription.push(this.dataService.accountClient.getById(this.data.account).subscribe(data => {
+          this.account = data;
+          this.subscription.push(this.dataService.gruppeClient.getById(this.data.gruppe).subscribe(data => {
+            this.student_gruppe = data;
+            this.disableForm(true);
+            this.patchValue;
+            this.disabled = true;
+            this.createmod = false;
+          }))
+        }));
+      else if (this.type == 1)
+        this.subscription.push(this.dataService.veranstaltungsgruppeClient.getAll().subscribe(data => {
+          data = data.filter(vg => vg.veranstaltung == this.data.id);
+          this.subscription.push(this.dataService.gruppeClient.getAll().subscribe(
+            gruppen => this.veranstaltungsgruppen = gruppen.filter(g => {
+              for (let vg of data) {
+                if (vg.gruppe == g.id)
+                  return true
+              }
+              return false;
+            })
+          ));
+        }))
+      else {
+        this.disableForm(true);
+        this.patchValue();
+        this.disabled = true;
+        this.createmod = false;
+      }
     } else {
       this.disabled = false;
       this.createmod = true;
     }
-
   }
 
   patchValue() {
@@ -60,6 +90,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
     this.data.EMail ? this.email.patchValue(this.data.EMail) : null;
     this.data.Passwort ? this.password.patchValue(this.data.Passwort) : null;
     this.data.Beschreibung ? this.bezeichnung.patchValue(this.data.Beschreibung) : null;
+    this.veranstaltungsgruppen ? this.gruppen.patchValue(this.veranstaltungsgruppen) : null;
+    this.student_gruppe ? this.sgruppe.patchValue(this.student_gruppe) : null;
   }
 
   initializeEmptyForm() {
@@ -71,7 +103,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
       'start': new FormControl('', Validators.required),
       'end': new FormControl('', Validators.required),
       'email': new FormControl('', Validators.required),
-      'bezeichnung': new FormControl('', Validators.required)
+      'bezeichnung': new FormControl('', Validators.required),
+      'sgruppe': new FormControl('', Validators.required)
     });
   }
 
@@ -92,15 +125,18 @@ export class DetailComponent implements OnChanges, OnDestroy {
     bool ? this.email.disable() : this.email.enable();
     bool ? this.password.disable() : this.password.enable();
     bool ? this.bezeichnung.disable() : this.bezeichnung.enable();
+    bool ? this.sgruppe.disable() : this.sgruppe.enable();
     this.disabled = bool;
   }
 
   isFormValid() {
     try {
       if (
-        ((this.type == 0 || this.type == 2 || this.type == 3) && (!this.name.invalid && !this.password.invalid && !this.email.invalid)
-        || (this.type == 1 && !this.gruppen.invalid && !this.date.invalid && !this.start.invalid && !this.end.invalid)
-        || (this.type == 4 && !this.bezeichnung.invalid)))
+        (((this.type == 2 || this.type == 3) && (!this.name.invalid && !this.password.invalid && !this.email.invalid))
+          || (this.type == 1 && !this.gruppen.invalid && !this.date.invalid && !this.start.invalid && !this.end.invalid)
+          || (this.type == 4 && !this.bezeichnung.invalid)
+          || (this.type == 0 && !this.sgruppe.invalid && !this.name.invalid && !this.password.invalid && !this.email.invalid))
+          )
         return true;
     } catch (e) {
       return false;
@@ -109,7 +145,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    for (let s of this.subscription)
+      this.subscription.pop().unsubscribe();
   }
 
   cancel() {
@@ -124,15 +161,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
   getFormData(mode: string) {
     switch (this.type) {
       case 0:
-        if (mode == 'create'){
-          this.student.Name = this.name.value;
-          this.student.EMail = this.email.value;
-          this.student.Passwort = this.password.value;
-        }
-        if (mode == 'edit')
-          this.data.Name = this.name.value;
-          this.data.EMail = this.email.value;
-          this.data.Passwort = this.password.value;
+        this.getAccountValues(this.student, mode);
         break;
       case 1:
         let start = new Date(this.date.value)
@@ -142,65 +171,104 @@ export class DetailComponent implements OnChanges, OnDestroy {
         end.setHours(this.start.value.split(':')[0])
         end.setMinutes(this.start.value.split(':')[1]);
         if (mode == 'create') {
-          // this.veranstaltung.Modul = this.gruppen.value;
-          this.veranstaltung.Von = start
-          this.veranstaltung.Bis = end
-          this.veranstaltung.Datum = new Date(this.date.value)
+          this.veranstaltung.von = start
+          this.veranstaltung.bis = end
+          this.veranstaltung.datum = new Date(this.date.value)
         }
         if (mode == 'edit') {
-          this.data.Modul = this.gruppen.value;
           this.data.Von = start
           this.data.Bis = end
           this.data.Datum = new Date(this.date.value)
         }
         break;
       case 2:
-        if (mode == 'create') {
-          this.dozent.Name = this.name.value;
-          this.dozent.EMail = this.email.value;
-          this.dozent.Passwort = this.password.value;
-        }
-        if (mode == 'edit') {
-          this.data.Name = this.name.value;
-          this.data.EMail = this.email.value;
-          this.data.Passwort = this.password.value;
-        }
+        this.getAccountValues(this.dozent, mode);
         break;
-      case 3: 
-      break;
+      case 3:
+        this.getAccountValues(this.admin, mode);
+        break;
+      case 4:
+        this.gruppe.beschreibung = this.bezeichnung.value;
     }
+  }
+
+  getAccountValues(data: any, mode: string) {
+    this.account.eMail = this.email.value;
+    this.account.passwort = this.password.value;
+    if (mode == 'edit')
+      this.data.name = this.name.value;
+    if (mode == 'create')
+      data.name = this.name.value;
+  }
+
+  setVeranstaltungsgruppen() {
+    this.deleteVeranstaltungsgruppen();
+    this.subscription.push(this.dataService.veranstaltungClient.getAll().subscribe(data => {
+      let ids: number[] = [];
+      for (let v of data)
+        ids.push(v.id);
+      let vg: Veranstaltungsgruppe = {} as Veranstaltungsgruppe;
+      for (let g_id of this.gruppen.value) {
+        vg.gruppe = g_id;
+        vg.veranstaltung = Math.max(...ids);
+        this.dataService.veranstaltungsgruppeClient.create(0, vg);
+      }
+    }));
+  }
+
+  deleteVeranstaltungsgruppen(){
+    for (let v of this.veranstaltungsgruppen)
+      this.dataService.veranstaltungsgruppeClient.delete(v.id);
   }
 
   save() {
     this.getFormData('edit');
     this.disableForm(true);
     if (this.type == 0)
-      this.dataServ.setStudent(this.data);
-    if (this.type == 1)
-      this.dataServ.setVeranstaltung(this.data)
+      this.dataService.studentClient.update(this.data.id, this.data);
+    if (this.type == 1) {
+      this.dataService.veranstaltungClient.update(this.data.id, this.data);
+      this.setVeranstaltungsgruppen;
+    }
     if (this.type == 2)
-      this.dataServ.setDozent(this.data)
+      this.dataService.dozentClient.update(this.data.id, this.data);
+    if (this.type == 3)
+      this.dataService.adminClient.update(this.data.id, this.data);
+    if (this.type == 4)
+      this.dataService.gruppeClient.update(this.data.id, this.data);
   }
 
   create() {
     this.getFormData('create');
     this.disableForm(true);
     if (this.type == 0)
-      this.dataServ.createStudent(this.student);
-    if (this.type == 1)
-      this.dataServ.createVeranstaltung(this.veranstaltung)
+      this.dataService.studentClient.create(0, this.student);
+    if (this.type == 1) {
+      this.dataService.veranstaltungClient.create(0, this.veranstaltung);
+      this.setVeranstaltungsgruppen();
+    }
     if (this.type == 2)
-      this.dataServ.createDozent(this.dozent)
+      this.dataService.dozentClient.create(0, this.dozent);
+    if (this.type == 3)
+      this.dataService.adminClient.create(0, this.admin);
+    if (this.type == 4)
+      this.dataService.gruppeClient.create(0, this.gruppe);
     this.close.emit();
   }
 
-  delete(){
+  delete() {
     if (this.type == 0)
-      this.dataServ.deleteStudent(this.data.Id);
-    if (this.type == 1)
-      this.dataServ.deleteVeranstaltung(this.data.Id)
+      this.dataService.studentClient.delete(this.data.Id);
+    if (this.type == 1){
+      this.deleteVeranstaltungsgruppen();
+      this.dataService.veranstaltungClient.delete(this.data.Id);
+    }
     if (this.type == 2)
-      this.dataServ.deleteDozent(this.data.Id)
+      this.dataService.dozentClient.delete(this.data.Id);
+    if (this.type == 3)
+      this.dataService.adminClient.delete(this.data.Id);
+    if (this.type == 4)
+      this.dataService.gruppeClient.delete(this.data.Id);
     this.close.emit();
   }
 
