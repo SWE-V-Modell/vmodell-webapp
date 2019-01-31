@@ -35,11 +35,11 @@ export class DashboardComponent implements OnInit {
     let date = new Date(Date.now());
     switch (type) {
       case -1:
-        return this.termine.filter(t => this.getWeek(t.von) < this.getWeek(date));
+        return this.termine.filter(t => this.getWeek(t.datum) < this.getWeek(date));
       case 0:
-        return this.termine.filter(t => this.getWeek(t.von) === this.getWeek(date));
+        return this.termine.filter(t => this.getWeek(t.datum) === this.getWeek(date));
       case 1:
-        return this.termine.filter(t => this.getWeek(t.von) > this.getWeek(date));
+        return this.termine.filter(t => this.getWeek(t.datum) > this.getWeek(date));
     }
   }
 
