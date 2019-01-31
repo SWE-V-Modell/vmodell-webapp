@@ -24,10 +24,11 @@ export class VeranstaltungDetailComponent implements OnInit {
 
     this.dataService.veranstaltungClient.getById(this.id).subscribe(veranstaltung => {
       this.veranstaltung = veranstaltung[0];
+      console.log(veranstaltung)
       this.veranstaltung.datum = new Date(this.veranstaltung.datum);
       this.veranstaltung.von = new Date(this.veranstaltung.von);
       this.veranstaltung.bis = new Date(this.veranstaltung.bis);
-
+      console.log(this.veranstaltung);
       this.veranstaltungsForm = new FormGroup({
         datum: new FormControl(this.veranstaltung.datum, Validators.required),
         title: new FormControl(this.veranstaltung.titel, Validators.required),

@@ -10,6 +10,7 @@ export class SidenavComponent implements OnInit {
 
   routes = [
     { text: 'Startseite', route: '', color: 'primary' },
+    { text: 'Admin', route: '/admin/', color: 'primary' },
     { text: 'Veranstaltungen', route: '/veranstaltung', color: 'primary' },
     { text: 'Statistiken', route: '/statistics/', color: 'primary' },
   ]
