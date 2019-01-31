@@ -13,7 +13,7 @@ import { DataService } from 'src/app/shared/data.service';
 export class VeranstaltungDetailComponent implements OnInit {
   id: number;
   veranstaltung: Veranstaltung;
-  module: Modul[];
+  moduls: Modul[];
   get(prop: string) { return this.veranstaltungsForm.get(prop); }
   veranstaltungsForm: FormGroup;
 
@@ -22,21 +22,52 @@ export class VeranstaltungDetailComponent implements OnInit {
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
 
-    this.dataService.getVeranstaltung(this.id).subscribe(veranstaltung => {
-      this.veranstaltung = veranstaltung;
+    this.dataService.veranstaltungClient.getById(this.id).subscribe(veranstaltung => {
+      this.veranstaltung = veranstaltung[0];
+      this.veranstaltung.datum = new Date(this.veranstaltung.datum);
+      this.veranstaltung.von = new Date(this.veranstaltung.von);
+      this.veranstaltung.bis = new Date(this.veranstaltung.bis);
+      console.log(this.veranstaltung);
       this.veranstaltungsForm = new FormGroup({
-        // modul: new FormControl(this.veranstaltung.Modul, Validators.required),
-        datum: new FormControl(this.veranstaltung.Datum, Validators.required),
-        von: new FormControl(this.veranstaltung.Von, Validators.required),
-        bis: new FormControl(this.veranstaltung.Bis, Validators.required),
-        anmerkung: new FormControl(this.veranstaltung.Anmerkung, Validators.required)
+        modul: new FormControl(this.veranstaltung.modul, Validators.required),
+        datum: new FormControl(this.veranstaltung.datum, Validators.required),
+        title: new FormControl(this.veranstaltung.titel, Validators.required),
+        von: new FormControl(this.dateToTime(this.veranstaltung.von), Validators.required),
+        bis: new FormControl(this.dateToTime(this.veranstaltung.bis), Validators.required),
+        anmerkung: new FormControl(this.veranstaltung.anmerkung)
+      })
+      this.veranstaltungsForm.valueChanges.subscribe(data => {
+        this.timeToDate(data['von'], 'von');
+        this.timeToDate(data['bis'], 'bis');
       })
     })
-
-    this.dataService.getAllModuls().subscribe(moduls => {
-      this.module = moduls;
+    this.dataService.modulClient.getAll().subscribe(moduls => {
+      this.moduls = moduls;
     })
-
   }
 
+  save() {
+    console.log(this.veranstaltung);
+    this.dataService.veranstaltungClient.update(this.veranstaltung.id, this.veranstaltung);
+  }
+
+  private dateToTime(input: Date): string {
+    if (!input) return '00:00';
+    return input.getHours().toString().padStart(2, '0') + ':'
+      + input.getMinutes().toString().padStart(2, '0');
+  }
+
+  private timeToDate(input: string, which: string) {
+    this.veranstaltung[which].setMinutes(+input.split(':')[1].split(' ')[0]);
+    var extraHours = 0; if (input.split(' ')[1] === 'pm') extraHours = 12;
+    this.veranstaltung[which].setHours(+input.split(':')[0] + extraHours);
+  }
+
+  private dateToSqlDate(date: Date): string {
+    return [date.getFullYear(), date.getMonth(), date.getDate()].map((x: any) => {
+      return x.toString().padStart(2, '0');
+    }).join('-') + ' ' + [date.getHours(), date.getMinutes(), date.getSeconds()].map((x: any) => {
+      return x.toString().padStart(2, '0');
+    }).join(':')
+  }
 }

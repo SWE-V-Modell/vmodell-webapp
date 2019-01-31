@@ -16,22 +16,16 @@ export class RestClient<T> {
   getAll(): Observable<T[]> {
     return this.http.get<T[]>(this.path);
   }
-  getDependentEntity<T>(segment: string): Observable<T> {
-    return this.http.get<T>(this.path + segment);
-  }
-  getDependentEntities<T>(segment: string): Observable<T[]> {
-    return this.http.get<T[]>(this.path + segment);
-  }
-  getEntityById(id: number): Observable<T> {
+  getById(id: number): Observable<T> {
     return this.http.get<T>(this.path + '?id=' + id.toString());
   }
-  postEntity(id: number, entity: T) {
+  create(id: number, entity: T) {
     this.http.post<T>(this.path + '/' + id, entity, { headers: headers }).subscribe(() => { });
   }
-  putEntity(id: number, entity: T) {
-    this.http.post<T>(this.path + '/' + id, entity, { headers: headers }).subscribe(() => { });
+  update(id: number, entity: T) {
+    this.http.put<T>(this.path + '/' + id, entity, { headers: headers }).subscribe(() => { });
   }
-  deleteEntity(id: any) {
+  delete(id: any) {
     this.http.delete(this.path + id).subscribe(() => { });
   }
 }
