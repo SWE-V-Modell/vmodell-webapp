@@ -44,8 +44,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
   ngOnChanges() {
     this.initializeEmptyForm();
     this.subscription.push(this.dataService.gruppeClient.getAll().subscribe(data => this.gruppenOptions = data));
-    if (this.data != -1) {
-      if (this.type != 1 && this.type != 4)
+    if (this.data !== -1) {
+      if (this.type !== 1 && this.type !== 4)
         this.subscription.push(this.dataService.accountClient.getById(this.data.account).subscribe(data => {
           this.account = data;
           this.subscription.push(this.dataService.gruppeClient.getById(this.data.gruppe).subscribe(data => {
@@ -136,7 +136,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
           || (this.type == 1 && !this.gruppen.invalid && !this.date.invalid && !this.start.invalid && !this.end.invalid)
           || (this.type == 4 && !this.bezeichnung.invalid)
           || (this.type == 0 && !this.sgruppe.invalid && !this.name.invalid && !this.password.invalid && !this.email.invalid))
-          )
+      )
         return true;
     } catch (e) {
       return false;
@@ -216,7 +216,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
     }));
   }
 
-  deleteVeranstaltungsgruppen(){
+  deleteVeranstaltungsgruppen() {
     for (let v of this.veranstaltungsgruppen)
       this.dataService.veranstaltungsgruppeClient.delete(v.id);
   }
@@ -259,7 +259,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
   delete() {
     if (this.type == 0)
       this.dataService.studentClient.delete(this.data.Id);
-    if (this.type == 1){
+    if (this.type == 1) {
       this.deleteVeranstaltungsgruppen();
       this.dataService.veranstaltungClient.delete(this.data.Id);
     }
