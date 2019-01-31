@@ -24,8 +24,8 @@
       <h4 class="mb-0">Gruppe</h4>
       <mat-form-field class="md-form mt-1">
         <mat-select formControlName="sgruppe" placeholder="Wählen Sie die Gruppe aus">
-          <mat-option *ngFor="let option of gruppenOptions" [value]="option.Id">
-            {{ option.Beschreibung }}
+          <mat-option *ngFor="let option of gruppenOptions" [value]="option.id">
+            {{ option.beschreibung }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -41,7 +41,8 @@
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Datum</h4>
       <mat-form-field class="md-form mt-1">
-        <input matInput [matDatepicker]="picker" placeholder="Wählen Sie ein Datum" formControlName="date">
+        <input matInput [matDatepicker]="picker" placeholder="Wählen Sie ein Datum"
+          formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -51,13 +52,15 @@
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Beginn</h4>
       <mat-form-field class="md-form mt-1" [formGroup]="form">
-        <input type="time" formControlName="start" matInput placeholder="Geben Sie eine Uhrzeit an!" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$">
+        <input type="time" formControlName="start" matInput placeholder="Geben Sie eine Uhrzeit an!"
+          pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$">
       </mat-form-field>
     </div>
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Ende</h4>
       <mat-form-field class="md-form mt-1" [formGroup]="form">
-        <input type="time" formControlName="end" matInput placeholder="Geben Sie eine Uhrzeit an!" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$">
+        <input type="time" formControlName="end" matInput placeholder="Geben Sie eine Uhrzeit an!"
+          pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$">
       </mat-form-field>
     </div>
   </div>
@@ -65,9 +68,10 @@
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Gruppen</h4>
       <mat-form-field class="md-form mt-1">
-        <mat-select formControlName="gruppen" placeholder="Wählen Sie die Gruppen aus" multiple>
-          <mat-option *ngFor="let option of gruppenOptions" [value]="option.Id">
-            {{ option.Beschreibung }}
+        <mat-select formControlName="gruppen" placeholder="Wählen Sie die Gruppen aus"
+          multiple>
+          <mat-option *ngFor="let option of gruppenOptions" [value]="option.id">
+            {{ option.beschreibung }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -81,13 +85,16 @@
   <button *ngIf="disabled" mdbBtn color="mdb-color" mdbWavesEffect (click)="disableForm(false); disabled = false;">
     <span class="fa fa-pencil" aria-hidden="true"></span> Bearbeiten
   </button>
-  <button *ngIf="!disabled && !createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" (click)="save()" mdbWavesEffect>
+  <button *ngIf="!disabled && !createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()"
+    (click)="save()" mdbWavesEffect>
     <span class="fa fa-save" aria-hidden="true"></span> Speichern
   </button>
-  <button *ngIf="createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()" (click)="create()" mdbWavesEffect>
+  <button *ngIf="createmod" mdbBtn color="mdb-color" [disabled]="!isFormValid()"
+    (click)="create()" mdbWavesEffect>
     <span class="fa fa-plus" aria-hidden="true"></span> Erstellen
   </button>
-  <button *ngIf="disabled" mdbBtn color="mdb-color" (click)="delete()" mdbWavesEffect>
+  <button *ngIf="disabled" mdbBtn color="mdb-color" (click)="delete()"
+    mdbWavesEffect>
     <span class="fa fa-trash" aria-hidden="true"></span> Löschen
   </button>
 </div>

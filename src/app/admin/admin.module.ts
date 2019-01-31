@@ -12,20 +12,16 @@ import { DetailComponent } from './detail/detail.component';
 import { ComponentsModule } from '../components/components.module';
 
 
-const routes: Routes = [
-  { path: '', component: AdminViewComponent }
-]
-
 @NgModule({
   declarations: [AdminViewComponent, ListComponent, DetailComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule,
     MaterialModule,
-    RouterModule.forChild(routes),
     ComponentsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class AdminModule { }

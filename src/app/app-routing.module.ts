@@ -8,9 +8,10 @@ import { RegisterComponent } from './login/register/register.component';
 import { StatisticsComponent } from './statistics/statistics/statistics.component';
 import { VeranstaltungComponent } from './veranstaltung/veranstaltung/veranstaltung.component';
 import { VeranstaltungDetailComponent } from './veranstaltung/veranstaltung-detail/veranstaltung-detail.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 
 const routes: Routes = [
-  { path: 'admin', loadChildren: './admin/admin.module#AdminModule', canActivate: [LoginGuard] },
+  { path: 'admin', component: AdminViewComponent, canActivate: [LoginGuard] },
   { path: '', component: DashboardComponent, canActivate: [LoginGuard] },
   {
     path: 'login', children: [

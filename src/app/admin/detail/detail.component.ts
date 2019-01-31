@@ -18,16 +18,15 @@ export class DetailComponent implements OnChanges, OnDestroy {
   form: FormGroup;
   disabled: boolean;
   createmod: boolean;
-  gruppenOptions;
-  subscription: Subscription[];
+  gruppenOptions: Gruppe[];
+  subscriptions: Subscription[] = [];
   student: Student = {} as Student;
-  dozent: Dozent = {} as Student;
+  dozent: Dozent = {} as Dozent;
   admin: Admin = {} as Admin;
   veranstaltung: Veranstaltung = {} as Veranstaltung;
   gruppe: Gruppe = {} as Gruppe;
   veranstaltungsgruppen: Gruppe[];
   account: MyAccount = {} as MyAccount;
-  student_gruppe: Gruppe;
 
   constructor(private dataService: DataService) { }
 
@@ -43,55 +42,55 @@ export class DetailComponent implements OnChanges, OnDestroy {
 
   ngOnChanges() {
     this.initializeEmptyForm();
-    this.subscription.push(this.dataService.gruppeClient.getAll().subscribe(data => this.gruppenOptions = data));
-    if (this.data !== -1) {
-      if (this.type !== 1 && this.type !== 4)
-        this.subscription.push(this.dataService.accountClient.getById(this.data.account).subscribe(data => {
-          this.account = data;
-          this.subscription.push(this.dataService.gruppeClient.getById(this.data.gruppe).subscribe(data => {
-            this.student_gruppe = data;
+    this.subscriptions.push(this.dataService.gruppeClient.getAll().subscribe(data => {
+      this.gruppenOptions = data;
+      if (this.data !== -1) {
+        // console.log(this.data, this.type);
+        if (this.type !== 1 && this.type !== 4)
+          this.subscriptions.push(this.dataService.accountClient.getById(this.data.account).subscribe(data => {
+            this.account = data[0];
             this.disableForm(true);
-            this.patchValue;
+            this.patchValue();
             this.disabled = true;
             this.createmod = false;
+          }));
+        else if (this.type == 1)
+          this.subscriptions.push(this.dataService.veranstaltungsgruppeClient.getAll().subscribe(data => {
+            data = data.filter(vg => vg.veranstaltung == this.data.id);
+            this.subscriptions.push(this.dataService.gruppeClient.getAll().subscribe(
+              gruppen => this.veranstaltungsgruppen = gruppen.filter(g => {
+                for (let vg of data) {
+                  if (vg.gruppe == g.id)
+                    return true
+                }
+                return false;
+              })
+            ));
           }))
-        }));
-      else if (this.type == 1)
-        this.subscription.push(this.dataService.veranstaltungsgruppeClient.getAll().subscribe(data => {
-          data = data.filter(vg => vg.veranstaltung == this.data.id);
-          this.subscription.push(this.dataService.gruppeClient.getAll().subscribe(
-            gruppen => this.veranstaltungsgruppen = gruppen.filter(g => {
-              for (let vg of data) {
-                if (vg.gruppe == g.id)
-                  return true
-              }
-              return false;
-            })
-          ));
-        }))
-      else {
-        this.disableForm(true);
-        this.patchValue();
-        this.disabled = true;
-        this.createmod = false;
+        else {
+          this.disableForm(true);
+          this.patchValue();
+          this.disabled = true;
+          this.createmod = false;
+        }
+      } else {
+        this.disabled = false;
+        this.createmod = true;
       }
-    } else {
-      this.disabled = false;
-      this.createmod = true;
-    }
+    }))
   }
 
   patchValue() {
-    this.data.Name ? this.name.patchValue(this.data.Name) : null;
-    this.data.Modul != null ? this.gruppen.patchValue(this.data.Gruppe) : null;
-    this.data.Datum ? this.date.patchValue(this.data.Datum) : null;
-    this.data.Von ? this.start.patchValue(this.makeTime(this.data.Von)) : null;
-    this.data.Bis ? this.end.patchValue(this.makeTime(this.data.Bis)) : null;
-    this.data.EMail ? this.email.patchValue(this.data.EMail) : null;
-    this.data.Passwort ? this.password.patchValue(this.data.Passwort) : null;
-    this.data.Beschreibung ? this.bezeichnung.patchValue(this.data.Beschreibung) : null;
+    this.data.name ? this.name.patchValue(this.data.name) : null;
+    this.data.gruppe ? this.gruppen.patchValue(this.data.gruppe) : null;
+    this.data.datum ? this.date.patchValue(this.data.datum) : null;
+    this.data.date_Begin ? this.start.patchValue(this.makeTime(this.data.date_Begin)) : null;
+    this.data.date_End ? this.end.patchValue(this.makeTime(this.data.date_End)) : null;
+    this.account.eMail ? this.email.patchValue(this.account.eMail) : null;
+    this.account.password ? this.password.patchValue(this.account.password) : null;
+    this.data.beschreibung ? this.bezeichnung.patchValue(this.data.beschreibung) : null;
     this.veranstaltungsgruppen ? this.gruppen.patchValue(this.veranstaltungsgruppen) : null;
-    this.student_gruppe ? this.sgruppe.patchValue(this.student_gruppe) : null;
+    this.data.gruppe ? this.sgruppe.patchValue(this.data.gruppe) : null;
   }
 
   initializeEmptyForm() {
@@ -145,8 +144,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (let s of this.subscription)
-      this.subscription.pop().unsubscribe();
+    for (let s of this.subscriptions)
+      s.unsubscribe();
   }
 
   cancel() {
@@ -171,8 +170,8 @@ export class DetailComponent implements OnChanges, OnDestroy {
         end.setHours(this.start.value.split(':')[0])
         end.setMinutes(this.start.value.split(':')[1]);
         if (mode == 'create') {
-          this.veranstaltung.von = start
-          this.veranstaltung.bis = end
+          this.veranstaltung.date_Begin = start
+          this.veranstaltung.date_End = end
           this.veranstaltung.datum = new Date(this.date.value)
         }
         if (mode == 'edit') {
@@ -194,7 +193,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
 
   getAccountValues(data: any, mode: string) {
     this.account.eMail = this.email.value;
-    this.account.passwort = this.password.value;
+    this.account.password = this.password.value;
     if (mode == 'edit')
       this.data.name = this.name.value;
     if (mode == 'create')
@@ -203,7 +202,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
 
   setVeranstaltungsgruppen() {
     this.deleteVeranstaltungsgruppen();
-    this.subscription.push(this.dataService.veranstaltungClient.getAll().subscribe(data => {
+    this.subscriptions.push(this.dataService.veranstaltungClient.getAll().subscribe(data => {
       let ids: number[] = [];
       for (let v of data)
         ids.push(v.id);

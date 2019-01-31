@@ -2,7 +2,7 @@ interface Veranstaltung {
   id: number,
   titel: string,
   datum: Date,
-  von: Date,
-  bis: Date,
+  date_Begin: Date,
+  date_End: Date,
   anmerkung: string,
 }

@@ -26,14 +26,14 @@ export class VeranstaltungDetailComponent implements OnInit {
       this.veranstaltung = veranstaltung[0];
       console.log(veranstaltung)
       this.veranstaltung.datum = new Date(this.veranstaltung.datum);
-      this.veranstaltung.von = new Date(this.veranstaltung.von);
-      this.veranstaltung.bis = new Date(this.veranstaltung.bis);
+      this.veranstaltung.date_Begin = new Date(this.veranstaltung.date_Begin);
+      this.veranstaltung.date_End = new Date(this.veranstaltung.date_End);
       console.log(this.veranstaltung);
       this.veranstaltungsForm = new FormGroup({
         datum: new FormControl(this.veranstaltung.datum, Validators.required),
         title: new FormControl(this.veranstaltung.titel, Validators.required),
-        von: new FormControl(this.dateToTime(this.veranstaltung.von), Validators.required),
-        bis: new FormControl(this.dateToTime(this.veranstaltung.bis), Validators.required),
+        von: new FormControl(this.dateToTime(this.veranstaltung.date_Begin), Validators.required),
+        bis: new FormControl(this.dateToTime(this.veranstaltung.date_End), Validators.required),
         anmerkung: new FormControl(this.veranstaltung.anmerkung)
       });
       this.veranstaltungsForm.valueChanges.subscribe(data => {
