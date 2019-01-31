@@ -2,9 +2,9 @@
 
   <p class="h4 mb-4">Registrieren</p>
 
-  <input type="email" class="form-control mb-4" placeholder="E-mail">
+  <input type="email" class="form-control mb-4" name="email" [(ngModel)]="email" placeholder="E-mail">
 
-  <input type="password" class="form-control" placeholder="Password">
+  <input type="password" class="form-control" name="password" [(ngModel)]="password" placeholder="Password">
   <small class="form-text text-muted mb-4">
     Mindestens 8 Buchstaben und eine Zahl
   </small>

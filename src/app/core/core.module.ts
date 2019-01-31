@@ -6,6 +6,7 @@ import { MaterialModule } from '../shared/material.module';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { DerPostillionComponent } from './der-postillion/der-postillion.component'
 import { RouterModule } from '@angular/router';
+import {LoginModule} from '../login/login.module';
 
 @NgModule({
   declarations: [SidenavComponent, DerPostillionComponent],
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MDBBootstrapModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    LoginModule
   ]
 })
 export class CoreModule { }

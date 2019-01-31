@@ -5,18 +5,19 @@
       <div class="row mt-2 mb-2">
         <h1 class="col-md-8 mx-auto white-text" [routerLink]="['']">Webapp</h1>
       </div>
-      <div class="row " *ngIf="loginService.getLogin()">
-        <button mdbBtn type="button" color="{{route.color}}" outline="true"
-          mdbWavesEffect *ngFor="let route of routes" class="col-md-8 mx-auto p-1 pt-2 pb-2"
-          [routerLink]="[route.route]">
-          <a class="white-text">{{route.text}}</a>
-        </button>
-
+      <p>{{loginService.getLogin() === true}}</p>
+      <div *ngIf="loginService.getLogin()">
+        <div *ngFor="let route of routes" class="row">
+          <button *ngIf="loginService.getRole() >= route.role" class="navbutton col-md-8  mx-auto p-1 pt-2 pb-2" mdbBtn type="button" color="{{route.color}}" outline="true"
+            mdbWavesEffect [routerLink]="[route.route]">
+            <a class="white-text">{{route.text}}</a>
+          </button>
+        </div>
       </div>
       <postillion class="row postillion"></postillion>
       <div class="row logout" *ngIf="loginService.getLogin()">
         <button mdbBtn type="button" color="danger" outline="true"
-          mdbWavesEffect class="col-md-8  mx-auto p-1 pt-2 pb-2" (click)="logout()"
+          mdbWavesEffect class="navbutton col-md-8  mx-auto p-1 pt-2 pb-2" (click)="logout()"
           [routerLink]="['/login']">
           <a class="white-text">Ausloggen</a>
         </button>
@@ -24,6 +25,11 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="content mr-5">
+    <div *ngIf="loginService.getLogin(); else noLogin">
     <router-outlet class="container p-3 ml-3"></router-outlet>
+    </div>
+    <ng-template #noLogin>
+      <app-login></app-login>
+    </ng-template>
   </mat-sidenav-content>
 </mat-sidenav-container>

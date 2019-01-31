@@ -2,15 +2,15 @@
 
   <p class="h4 mb-4">Einloggen</p>
 
-  <input type="email" class="form-control mb-4" placeholder="E-mail">
-  <input type="password" class="form-control mb-4" placeholder="Password">
+  <input type="email" class="form-control mb-4" placeholder="E-mail" name="email" [(ngModel)]="email">
+  <input type="password" class="form-control mb-4" placeholder="Password" name="password" [(ngModel)]="password">
 
   <div class="d-flex justify-content-around">
     <div>
       <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
     </div>
     <div>
-      <a [routerLink]="['/404']">Fasswort vergessen?</a>
+      <a [routerLink]="['/404']">Passwort vergessen?</a>
     </div>
   </div>
 
