@@ -1,25 +1,25 @@
-<form class="text-center border border-light p-5">
+<form class="text-center p-5">
+  <mat-card>
+    <p class="h4 mb-4">Einloggen</p>
 
-  <p class="h4 mb-4">Einloggen</p>
+    <input type="email" class="form-control mb-4" placeholder="E-mail" name="email" [(ngModel)]="email">
+    <input type="password" class="form-control mb-4" placeholder="Password" name="password" [(ngModel)]="password">
 
-  <input type="email" class="form-control mb-4" placeholder="E-mail" name="email" [(ngModel)]="email">
-  <input type="password" class="form-control mb-4" placeholder="Password" name="password" [(ngModel)]="password">
-
-  <div class="d-flex justify-content-around">
-    <div>
-      <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
+    <div class="d-flex justify-content-around">
+      <div>
+        <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
+      </div>
+      <div>
+        <a [routerLink]="['/404']">Passwort vergessen?</a>
+      </div>
     </div>
-    <div>
-      <a [routerLink]="['/404']">Passwort vergessen?</a>
-    </div>
-  </div>
 
-  <button mdbBtn color="info" block="true" class="my-4" (click)="login()">
-    Einloggen
-  </button>
+    <button mdbBtn color="info" block="true" class="my-4" (click)="login()">
+      Einloggen
+    </button>
 
-  <p>Noch nicht registriert?
-    <a [routerLink]="['/login/register']">Registrieren</a>
-  </p>
-
+    <p>Noch nicht registriert?
+      <a [routerLink]="['/login/register']">Registrieren</a>
+    </p>
+  </mat-card>
 </form>

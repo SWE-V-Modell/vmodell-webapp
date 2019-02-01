@@ -8,7 +8,6 @@ import {Role} from '../../../models/role';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-
   routes = [
     { text: 'Startseite', route: '', color: 'primary', role: Role.Student },
     { text: 'Admin', route: '/admin/', color: 'primary', role: Role.Admin },

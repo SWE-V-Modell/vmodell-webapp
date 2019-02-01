@@ -1,11 +1,10 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" opened class="sidenav stylish-color"
+  <mat-sidenav #sidenav mode="over" opened="false" class="sidenav stylish-color"
     [fixedInViewport]="true" [fixedTopGap]="0" [fixedBottomGap]="0">
     <div class="container navbuttons">
       <div class="row mt-2 mb-2">
         <h1 class="col-md-8 mx-auto white-text" [routerLink]="['']">Webapp</h1>
       </div>
-      <p>{{loginService.getLogin() === true}}</p>
       <div *ngIf="loginService.getLogin()">
         <div *ngFor="let route of routes" class="row">
           <button *ngIf="loginService.getRole() >= route.role" class="navbutton col-md-8  mx-auto p-1 pt-2 pb-2" mdbBtn type="button" color="{{route.color}}" outline="true"
@@ -25,6 +24,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="content mr-5">
+    <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
     <div *ngIf="loginService.getLogin(); else noLogin">
     <router-outlet class="container p-3 ml-3"></router-outlet>
     </div>

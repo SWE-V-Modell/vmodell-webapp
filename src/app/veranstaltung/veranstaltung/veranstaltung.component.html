@@ -1,13 +1,14 @@
 <mat-tab-group (selectedIndexChange)="selectedTab = $event; ngOnInit();">
   <mat-tab *ngFor="let tab of tabs" label="{{tab}}">
     <div class="content">
-      <div *ngIf="filterEvent(selectedTab).length > 0; else anmerkung">
-        <event *ngFor="let termin of filterEvent(selectedTab)" [termin]="termin"></event>
-      </div>
-      <ng-template #anmerkung>
-        <p class="card-text" style="text-align: center; font-size: 17px;">Keine Veranstaltung</p>
-      </ng-template>
-
+      <mat-card>
+        <div *ngIf="filterEvent(selectedTab).length > 0; else anmerkung">
+          <event *ngFor="let termin of filterEvent(selectedTab)" [termin]="termin"></event>
+        </div>
+        <ng-template #anmerkung>
+          <p class="card-text" style="text-align: center; font-size: 17px;">Keine Veranstaltung</p>
+        </ng-template>
+      </mat-card>
     </div>
   </mat-tab>
 </mat-tab-group>

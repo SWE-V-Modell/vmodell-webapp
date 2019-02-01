@@ -20,7 +20,9 @@ export class RestClient<T> {
     return this.http.get<T>(this.path + '?id=' + id.toString());
   }
   getByColumn(columnName: string, value: any): Observable<T[]> {
-    return this.http.get<T[]>(this.path + '?' + columnName + '=' + value.toString());
+    const query = this.path + '?' + columnName + '=' + value.toString();
+    console.log(query);
+    return this.http.get<T[]>(query);
   }
   getByColumns(queryparams: {col: string, val: any}[]): Observable<T[]> {
     let query = this.path;
