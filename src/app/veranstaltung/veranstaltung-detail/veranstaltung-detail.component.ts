@@ -5,6 +5,8 @@ import { DynamicFormComponent } from 'src/app/components/dynamic-form/dynamic-fo
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DataService } from 'src/app/shared/data.service';
 
+
+
 @Component({
   selector: 'app-veranstaltung-detail',
   templateUrl: './veranstaltung-detail.component.html',
@@ -24,8 +26,8 @@ export class VeranstaltungDetailComponent implements OnInit {
 
     this.dataService.veranstaltungClient.getById(this.id).subscribe(veranstaltung => {
       this.veranstaltung = veranstaltung[0];
-      console.log(veranstaltung)
-      this.veranstaltung.datum = new Date(this.veranstaltung.datum);
+      console.log(veranstaltung);
+      this.veranstaltung.datum = new Date(this.veranstaltung.date_Begin);
       this.veranstaltung.date_Begin = new Date(this.veranstaltung.date_Begin);
       this.veranstaltung.date_End = new Date(this.veranstaltung.date_End);
       console.log(this.veranstaltung);

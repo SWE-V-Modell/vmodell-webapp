@@ -6,14 +6,16 @@ import { MaterialModule } from '../shared/material.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
+import { EventComponent } from './event/event.component';
 
 @NgModule({
-  declarations: [DashboardComponent],
+  declarations: [DashboardComponent, EventComponent],
   imports: [
     CommonModule,
     MDBBootstrapModule,
     MaterialModule,
     RouterModule,
-  ]
+  ],
+  exports: [EventComponent]
 })
 export class DashboardModule { }
