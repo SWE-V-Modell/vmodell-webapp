@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataService {
 
-  path = 'https://localhost:5001/api/';
+  path = 'http://localhost:1382/api/';
 
   accountClient: RestClient<MyAccount>;
   adminClient: RestClient<Admin>;

@@ -62,7 +62,6 @@ export class DetailComponent implements OnChanges, OnDestroy {
           else if (this.type == 1)
             this.subscriptions.push(this.dataService.veranstaltungsgruppeClient.getAll().subscribe(data => {
               data = data.filter(vg => vg.veranstaltungId == this.data.id);
-              console.log(data)
               for (let vg of data) {
                 this.veranstaltungsgruppen.push(vg.gruppeId);
                 this.veranstaltungsgruppenIds.push(vg.id);
