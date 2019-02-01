@@ -68,8 +68,7 @@
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Gruppen</h4>
       <mat-form-field class="md-form mt-1">
-        <mat-select formControlName="vdozent" placeholder="Wählen Sie ihren Dozenten aus"
-          multiple>
+        <mat-select formControlName="gruppen" placeholder="Wählen Sie die Gruppen aus" multiple>
           <mat-option *ngFor="let option of gruppenOptions" [value]="option.id">
             {{ option.beschreibung }}
           </mat-option>
@@ -79,7 +78,7 @@
     <div *ngIf="type == 1" class="div-column">
       <h4 class="mb-0">Dozent</h4>
       <mat-form-field class="md-form mt-1">
-        <mat-select formControlName="gruppen" placeholder="Wählen Sie die Gruppen aus">
+        <mat-select formControlName="vdozent" placeholder="Wählen Sie einen Dozenten aus">
           <mat-option *ngFor="let option of dozentOptions" [value]="option.id">
             {{ option.name }}
           </mat-option>

@@ -41,10 +41,11 @@ export class DetailComponent implements OnChanges, OnDestroy {
   get bezeichnung() { return this.form.get('bezeichnung'); }
   get password() { return this.form.get('password'); }
   get sgruppe() { return this.form.get('sgruppe'); }
-  get vdozent() { return this.form.get('dozent'); }
+  get vdozent() { return this.form.get('vdozent'); }
 
   ngOnChanges() {
-    this.veranstaltungsgruppen = []
+    console.log(this.data);
+    this.veranstaltungsgruppen = [];
     this.initializeEmptyForm();
     this.subscriptions.push(this.dataService.gruppeClient.getAll().subscribe(data => {
       this.gruppenOptions = data;
@@ -61,17 +62,23 @@ export class DetailComponent implements OnChanges, OnDestroy {
             }));
           else if (this.type == 1)
             this.subscriptions.push(this.dataService.veranstaltungsgruppeClient.getAll().subscribe(data => {
-              data = data.filter(vg => vg.veranstaltungId == this.data.id);
-              for (let vg of data) {
-                this.veranstaltungsgruppen.push(vg.gruppeId);
+              console.log("GRUPPECLIENT");
+              console.log(data, this.data);
+              data = data.filter(vg => vg.veranstaltung == this.data.id);
+              console.log("Filtered");
+
+              console.log(data);
+              this.veranstaltungsgruppenIds = [];
+              for (const vg of data) {
+                this.veranstaltungsgruppen.push(vg.gruppe);
                 this.veranstaltungsgruppenIds.push(vg.id);
               }
-
+  console.log({gruppe: this.veranstaltungsgruppen, id: this.veranstaltungsgruppenIds, data: data});
               this.disableForm(true);
               this.patchValue();
               this.disabled = true;
               this.createmod = false;
-            }))
+            }));
           else {
             this.disableForm(true);
             this.patchValue();
@@ -82,14 +89,14 @@ export class DetailComponent implements OnChanges, OnDestroy {
           this.disabled = false;
           this.createmod = true;
         }
-      }))
-    }))
+      }));
+    }));
   }
 
   patchValue() {
     this.data.name ? this.name.patchValue(this.data.name) : null;
     this.data.gruppe ? this.gruppen.patchValue(this.data.gruppe) : null;
-    this.data.datum ? this.date.patchValue(this.data.datum) : null;
+    this.data.date_Begin ? this.date.patchValue(this.data.date_Begin) : null;
     this.data.date_Begin ? this.start.patchValue(this.makeTime(this.data.date_Begin)) : null;
     this.data.date_End ? this.end.patchValue(this.makeTime(this.data.date_End)) : null;
     this.account.eMail ? this.email.patchValue(this.account.eMail) : null;
@@ -112,7 +119,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
       'email': new FormControl('', Validators.required),
       'bezeichnung': new FormControl('', Validators.required),
       'sgruppe': new FormControl('', Validators.required),
-      'dozent': new FormControl('', Validators.required)
+      'vdozent': new FormControl('', Validators.required)
     });
   }
 
@@ -155,7 +162,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (let s of this.subscriptions)
+    for (const s of this.subscriptions)
       s.unsubscribe();
   }
 
@@ -174,24 +181,28 @@ export class DetailComponent implements OnChanges, OnDestroy {
         this.getAccountValues(this.student, mode);
         break;
       case 1:
-        let start = new Date(this.date.value)
-        start.setHours(this.start.value.split(':')[0])
+        const start = new Date(this.date.value);
+        start.setHours(this.start.value.split(':')[0]);
         start.setMinutes(this.start.value.split(':')[1]);
-        let end = new Date(this.date.value);
-        end.setHours(this.end.value.split(':')[0])
+        const end = new Date(this.date.value);
+        end.setHours(this.end.value.split(':')[0]);
         end.setMinutes(this.end.value.split(':')[1]);
         console.log(start, end);
         if (mode == 'create') {
-          this.veranstaltung.date_Begin = start
-          this.veranstaltung.date_End = end
-          this.veranstaltung.datum = new Date(this.date.value)
-          this.veranstaltung.dozentId = this.vdozent.value
+          this.veranstaltung.titel = this.bezeichnung.value;
+          this.veranstaltung.date_Begin = start;
+          this.veranstaltung.date_End = end;
+          this.veranstaltung.dozentId = this.vdozent.value;
+          this.veranstaltung.anmerkung = '';
         }
         if (mode == 'edit') {
-          this.data.date_Begin = start
-          this.data.date_End = end
-          this.data.Datum = new Date(this.date.value)
-          this.data.dozentId = this.vdozent.value
+          this.data.date_Begin = start;
+          this.data.date_End = end;
+          this.data.Datum = new Date(this.date.value);
+          this.data.dozentId = this.vdozent.value;
+          this.data.titel = this.bezeichnung.value;
+          console.log("EDIT:");
+          console.log(this.data);
         }
         break;
       case 2:
@@ -218,20 +229,22 @@ export class DetailComponent implements OnChanges, OnDestroy {
   setVeranstaltungsgruppen() {
     this.deleteVeranstaltungsgruppen();
     this.subscriptions.push(this.dataService.veranstaltungClient.getAll().subscribe(data => {
-      let ids: number[] = [];
-      for (let v of data)
+      console.log("GRUPPEN: "+data);
+
+      const ids: number[] = [];
+      for (const v of data)
         ids.push(v.id);
-      let vg: Veranstaltungsgruppe = {} as Veranstaltungsgruppe;
-      for (let g_id of this.gruppen.value) {
-        vg.gruppeId = g_id;
-        vg.veranstaltungId = Math.max(...ids);
+      const vg: Veranstaltungsgruppe = {} as Veranstaltungsgruppe;
+      for (const g_id of this.gruppen.value) {
+        vg.gruppe = g_id;
+        this.data === -1 ? vg.veranstaltung = Math.max(...ids) : vg.veranstaltung = this.data.id;
         this.dataService.veranstaltungsgruppeClient.create(0, vg);
       }
     }));
   }
 
   deleteVeranstaltungsgruppen() {
-    for (let id of this.veranstaltungsgruppenIds)
+    for (const id of this.veranstaltungsgruppenIds)
       this.dataService.veranstaltungsgruppeClient.delete(id);
   }
 
@@ -242,7 +255,7 @@ export class DetailComponent implements OnChanges, OnDestroy {
       this.dataService.studentClient.update(this.data.id, this.data);
     if (this.type == 1) {
       this.dataService.veranstaltungClient.update(this.data.id, this.data);
-      this.setVeranstaltungsgruppen;
+      this.setVeranstaltungsgruppen();
     }
     if (this.type == 2)
       this.dataService.dozentClient.update(this.data.id, this.data);
